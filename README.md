@@ -5,8 +5,8 @@ Tools for interacting with the IGSB alignment QC CouchDB
 View, and edit igsb_qc CouchDB documents.
 
 Usage:
-    edit_upload_json.py [-s server] -d database -c credentials -b BionimbusID
-        [-D delete_fields] [-A add_fields]
+    igsb_qc_couchdb_util.py [-s server] -d database -c credentials
+        [-b BionimbusID] [-D delete_fields] [-A add_fields]
 
 Options:
     -s server            Server name [default: http://127.0.0.1:5984]
@@ -16,3 +16,8 @@ Options:
     -D delete_fields     comma-delimited list of field names
     -A add_fields        comma-delimited list of field:value pairs
 ```
+
+Requirements:
+1. couchdb-requests v0.0.1 - [https://github.com/adamlofts/couchdb-requests](https://github.com/adamlofts/couchdb-requests)
+2. docopt v0.6.2
+3. requests v2.7.0

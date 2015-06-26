@@ -2,7 +2,7 @@
 View, and edit igsb_qc CouchDB documents.
 
 Usage:
-    edit_upload_json.py [-s server] -d database -c credentials -b BionimbusID
+    igsb_qc_couchdb_util.py [-s server] -d database -c credentials -b BionimbusID
         [-D delete_fields] [-A add_fields]
 
 Options:
