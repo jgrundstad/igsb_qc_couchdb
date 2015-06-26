@@ -6,7 +6,7 @@ Usage:
         [-D delete_fields] [-A add_fields]
 
 Options:
-    -s server            Server name [default: http://127.0.0.1:5984]
+    -s server            Server URI [default: http://127.0.0.1:5984]
     -d database          CouchDB database name
     -c credentials       username:password
     -b BionimbusID       e.g. 2014-2232
