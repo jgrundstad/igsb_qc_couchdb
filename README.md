@@ -18,6 +18,7 @@ Options:
 ```
 
 Requirements:
-1. couchdb-requests v0.0.1 - [https://github.com/adamlofts/couchdb-requests](https://github.com/adamlofts/couchdb-requests)
-2. docopt v0.6.2
-3. requests v2.7.0
+
+* couchdb-requests v0.0.1 - [https://github.com/adamlofts/couchdb-requests](https://github.com/adamlofts/couchdb-requests)
+* docopt v0.6.2
+* requests v2.7.0
