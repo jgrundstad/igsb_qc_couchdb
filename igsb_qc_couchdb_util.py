@@ -1,5 +1,5 @@
 """
-Edit igsb_qc CouchDB documents.  Takes in db location and credentials,
+View, and edit igsb_qc CouchDB documents.
 
 Usage:
     edit_upload_json.py [-s server] -d database -c credentials -b BionimbusID
@@ -22,6 +22,8 @@ import pprint
 
 
 def connect_to_db(server_name, credentials):
+    """ Returns server object used to access db
+    """
     u = credentials.split(':')[0]
     p = credentials.split(':')[1]
     auth = requests.auth.HTTPBasicAuth(u, p)
@@ -33,11 +35,15 @@ def connect_to_db(server_name, credentials):
     return server
 
 def delete_document(db, doc):
+    """ Careful
+    """
     print "Deleting document {}".format(doc['_id'])
     db.delete_doc(doc)
 
 
 def view_docs_by_bnid(db, bnid):
+    """ Access the 'all' view.  Returns all docs containing Bionimbus_id
+    """
     rows = db.view('igsb_qc/all', key=bnid, descending=True)
     pp = pprint.PrettyPrinter(indent=4)
     for row in rows:
