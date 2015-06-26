@@ -1,0 +1,49 @@
+{
+  "id": "0f57c0165dac0afe037638b3dd0a1d2e",
+  "key": "2015-1081",
+  "value": {
+	"_id": "0f57c0165dac0afe037638b3dd0a1d2e",
+	"_rev": "1-bdeb7350b67eaa404dc89533d81193da",
+	"Bionimbus_id": "2015-1081",
+	"Run": "0389",
+	"Date": "150605",
+	"Machine": "SN1070",
+	"BarCode": "BHJVKFADXX",
+	"Lane": "2",
+	"read_length": "101",
+	"total_reads": "61812470",
+	"post_align_reads": "61659913",
+	"fraction_aligned": "0.9975",
+	"post_rmdup_reads": "48128190",
+	"fraction_rmduped": "0.2214",
+	"target_size": "2539845",
+	"aligned_bp_ot": "1397586252",
+	"frac_aligned_bp_ot": "0.2875",
+	"fraction_sequenced_bp_ot": "0.2239",
+	"median_insert_size": "142",
+	"median_absolute_deviation": "24",
+	"mean_insert_size": "149.75",
+	"insert_standard_deviation": "40.63",
+	"date_aligned": "Fri, 12 Jun 2015 23:35:25 GMT",
+	"coverage": {
+	  "V3_capture_t1": {
+		"average": "976",
+		"%covered_at_average": "0.4988",
+		"90%": "302",
+		"50%": "955",
+		"10%": "1581",
+		"zero_cov_bp": "41075",
+		"%zero_cov": "0.0162"
+	  },
+	  "V3_capture_t2": {
+		"average": "550",
+		"%covered_at_average": "0.4718",
+		"90%": "114",
+		"50%": "527",
+		"10%": "960",
+		"zero_cov_bp": "66662",
+		"%zero_cov": "0.0194"
+	  }
+	}
+  }
+}
