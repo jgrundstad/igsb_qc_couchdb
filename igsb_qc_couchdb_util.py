@@ -123,7 +123,7 @@ def delete_field(db, doc, field, subfield=None):
         raise
 
 
-def add_field_payload(db, doc, field, payload, is_coverage=False):
+def add_field_and_payload(db, doc, field, payload, is_coverage=False):
     """
     Add dict payload to new field in the given document
     :param db: couchdb DB object
