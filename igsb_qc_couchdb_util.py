@@ -24,7 +24,10 @@ import json
 import sys
 
 
-def connect_to_server(server_name, credentials):
+pp = pprint.PrettyPrinter(indent=4)
+
+
+def connect_to_db(server_name, credentials, db_name):
     """
     Connect to provided server with the given credentials
     :param server_name: e.g. 'http://127.0.0.1:5984'
@@ -39,7 +42,8 @@ def connect_to_server(server_name, credentials):
     print "Session auth: {}".format(auth)
     server = Server(uri=server_name, session=session)
     print "Connected!\n{}".format(server.get_info())
-    return server
+    db = server.get_db(db_name, is_verify_existance=True)
+    return db
 
 
 def delete_document(db, doc):
@@ -53,23 +57,45 @@ def delete_document(db, doc):
     try:
         db.delete_doc(doc)
     except Exception, e:
-        print >>sys, "Error when deleting document: {}".format(doc)
+        print >>sys.stderr , "Error when deleting document: {}".format(doc)
         raise
 
 
-def view_docs_by_bnid(db, bnid):
+def get_docs_by_bnid(db, bnid):
     """
     Access the 'all' view.  Returns all docs containing the given Bionimbus_id
     :param db: CouchDB obj
     :param bnid: Bionimbus ID
-    :return:
+    :return: couchdb view
     """
     rows = db.view('igsb_qc/all', key=bnid, descending=True)
-    pp = pprint.PrettyPrinter(indent=4)
     for row in rows:
         pp.pprint(row['value'])
         print row['value']['_id']
     return rows
+
+
+def get_doc_by_readgroup(db, readgroup):
+    """
+    Access the 'by_readgroup' view.  Returns all docs containing the given readgroup
+    :param db: CouchDB obj
+    :param readgroup: 2013-2457_140122_SN673_0209_BC3E7WACXX_2
+    :return: couchdb view
+    """
+    rows = db.view('igsb_qc/by_readgroup', key=readgroup)
+    if rows.count() == 0:
+        print >> sys.stderr, "Warning: No rows returned for readgroup: {}".format(
+            readgroup)
+    elif 0 < rows.count() < 2:
+        for row in rows:
+            pp.pprint(row)
+        return row
+    else:
+        print >> sys.stderr, "Error: Returned {} rows for readgroup {}".format(
+            rows.count(), readgroup)
+        for row in rows:
+            print >> sys.stderr, row['value']['_id']
+        sys.exit(1)
 
 
 def find_duplicate_docs(rows, db):
@@ -156,12 +182,11 @@ def main():
     db_name = args['-d']
     credentials = args['-c']
 
-    print "Connect to db: {} on server: {}".format(db_name, server_name)
-    server = connect_to_server(server_name, credentials)
-    db = server.get_db(db_name)
+    print "Connect to db: {} on server: {}".format(db_name, server_name, db_name)
+    db = connect_to_db(server_name, credentials, db_name)
 
     print "Searching for document with BNid: {}".format(bnid)
-    rows = view_docs_by_bnid(db, bnid)
+    rows = get_docs_by_bnid(db, bnid)
 
     # search through and remove all documents that appear to be duplicates
     #all_docs = db.view('igsb_qc/all', descending=True)
