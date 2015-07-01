@@ -53,7 +53,7 @@ def delete_document(db, doc):
     try:
         db.delete_doc(doc)
     except Exception, e:
-        print >>sys, "Error when deleting document: {}".format(doc)
+        print >>sys.stderr , "Error when deleting document: {}".format(doc)
         raise
 
 
