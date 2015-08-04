@@ -1,8 +1,23 @@
-import argparse
+"""
+Interact with the hgac_md5sum couchdb
+
+Usage:
+    hgac_md5.py add -u USERNAME -p PASSWORD -f FILENAME -m MD5SUM
+    hgac_md5.py get -u USERNAME -p PASSWORD -f FILENAME
+
+Options:
+    -u USERNAME     couchdb username
+    -p PASSWORD     couchdb password
+    -f FILENAME     filename
+    -m MD5SUM       calculated md5sum
+"""
 import datetime
+from docopt import docopt
 import requests
 import requests.auth
 from couchdbreq import Server
+import sys
+
 __author__ = 'A. Jason Grundstad'
 
 
@@ -24,20 +39,27 @@ class HGACmd5:
 
     def get_md5sum_by_filename(self, filename=None):
         rows = self.db.view('hgac_md5/md5sum_by_filename', key=filename)
-        md5sum_list = list()
+        md5sum = ''
+
+        if rows.count() > 1:
+            err_string = "ERROR: More than one md5sum retrieved for " + \
+                "filename: {}"
+            print >>sys.stderr, err_string.format(filename)
+            for row in rows:
+                print "{}  {}".format(row.get('value'), row.get('key'))
+            sys.exit(1)
+
         for row in rows:
-            md5sum_list.append(row.get('value'))
-        return md5sum_list
+            md5sum = row.get('value')
+        return md5sum
 
 def main():
-    parser = argparse.ArgumentParser(description="interact with the " + \
-                                                 "hgac_md5sum couchdb.")
-    parser.add_argument("-u", "--username", required=True,
-                        help="username", action='store', dest='u')
-    parser.add_argument("-p", "--password", required=True,
-                        help="password", action='store', dest='p')
-    args = parser.parse_args()
-    print args
+    args = docopt(__doc__)
+    h = HGACmd5(username=args['-u'], password=args['-p'])
+    if args['get']:
+        print >>sys.stdout, h.get_md5sum_by_filename(args['-f'])
+    if args['add']:
+        h.add_md5(filename=args['-f'], md5sum=args['-m'])
 
 
 if __name__ == '__main__':
