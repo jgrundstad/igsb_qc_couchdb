@@ -27,7 +27,7 @@ class HGACmd5:
         auth = requests.auth.HTTPBasicAuth(username, password)
         session = requests.session()
         session.auth = auth
-        server = Server(uri="http://128.135.219.167:5984",
+        server = Server(uri="https://128.135.219.167:6984",
                         session=session)
         self.db = server.get_db('hgac_md5', is_verify_existance=True)
 
